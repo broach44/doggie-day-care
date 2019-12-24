@@ -48,27 +48,25 @@ class Home extends React.Component {
   }
 
   renderView = () => {
-    const { authed } = this.state;
+    const { authed, dogs, employees } = this.state;
     if (!authed) {
       return (<Auth />);
     }
     return (
       <div>
-        <Navbar />
+        <DogPen dogs={dogs} />
+        <StaffRoom employees={employees} />
     </div>);
   }
 
   render() {
-    const { dogs, employees } = this.state;
-
+    const { authed } = this.state;
     return (
       <div className="Home">
-        <h1>Doggie Daycare</h1>
+        <Navbar authed={authed} />
         {
           this.renderView()
         }
-      <DogPen dogs={dogs} />
-      <StaffRoom employees={employees} />
     </div>
     );
   }
