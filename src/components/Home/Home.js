@@ -22,13 +22,19 @@ class Home extends React.Component {
   }
 
   getDogs = () => {
-    const dogs = dogsData.getAllDogs();
-    this.setState({ dogs });
+    const dogs = dogsData.getAllDogs()
+      .then(() => {
+        this.setState({ dogs });
+      })
+      .catch((errFromGetDogs) => console.error(errFromGetDogs));
   }
 
   getEmployees = () => {
-    const employees = employeesData.getAllEmployees();
-    this.setState({ employees });
+    const employees = employeesData.getAllEmployees()
+      .then(() => {
+        this.setState({ employees });
+      })
+      .catch((errFromGetEmployees) => console.error(errFromGetEmployees));
   }
 
   componentDidMount() {
