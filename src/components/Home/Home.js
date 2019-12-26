@@ -7,7 +7,7 @@ import Auth from '../Auth/Auth';
 import Navbar from '../Navbar/Navbar';
 import DogPen from '../DogPen/DogPen';
 import StaffRoom from '../StaffRoom/StaffRoom';
-
+import WalkSchedule from '../WalkSchedule/WalkSchedule';
 // import dogsData from '../../helpers/data/dogsData';
 // import employeesData from '../../helpers/data/employeesData';
 
@@ -42,6 +42,7 @@ class Home extends React.Component {
       <div>
         <DogPen />
         <StaffRoom />
+        <WalkSchedule />
     </div>);
   }
 
