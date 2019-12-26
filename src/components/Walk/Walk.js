@@ -7,7 +7,7 @@ import dogsData from '../../helpers/data/dogsData';
 class Walk extends React.Component {
   state = {
     employee: {},
-    dog: {},
+    dogName: '',
   }
 
   static propTypes = {
@@ -20,17 +20,18 @@ class Walk extends React.Component {
       .then((employeeInfo) => {
         this.setState({ employee: employeeInfo.data })
       })
-      .catch((errFromGetEmployeeById) => console.error(errFromGetEmployeeById));
+      .catch((errFromGetEmployeeName) => console.error(errFromGetEmployeeName));
   }
 
   getDogName = () => {
     const { walk } = this.props;
     dogsData.getSingleDogById(walk.dogId)
       .then((dogInfo) => {
-        this.setState({ dog: dogInfo.data })
+        this.setState({ dogName: dogInfo.data.dogName })
       })
-      .catch((errFromGetDogById) => console.error(errFromGetDogById));
+      .catch((errFromGetDogName) => console.error(errFromGetDogName));
   }
+
 
   componentDidMount() {
     this.getEmployeeName();
@@ -39,12 +40,12 @@ class Walk extends React.Component {
 
   render() {
     const { walk } = this.props;
-    const { employee, dog } = this.state;
+    const { employee, dogName } = this.state;
 
     return (
       <tr>
         <td>{walk.date}</td>
-        <td>{walk.dogId} {dog.name}</td>
+        <td>{dogName}</td>
         <td>{employee.firstName} {employee.lastName}</td>
       </tr>
     );
