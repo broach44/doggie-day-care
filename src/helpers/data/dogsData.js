@@ -20,4 +20,6 @@ const getAllDogs = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-export default { getAllDogs };
+const getSingleDogById = (dogId) => axios.get(`${baseUrl}/dogs/${dogId}.json`);
+
+export default { getAllDogs, getSingleDogById };
