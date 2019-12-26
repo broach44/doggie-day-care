@@ -1,10 +1,10 @@
 import axios from 'axios';
-// import apiKeys from '../apiKeys.json';
+import apiKeys from '../apiKeys.json';
 
-// const baseUrl = apiKeys.firebaseKeys.databasURL;
+const baseUrl = apiKeys.firebaseKeys.databaseURL;
 
 const getAllEmployees = () => new Promise((resolve, reject) => {
-  axios.get('https://doggie-daycare-e1e4d.firebaseio.com/employees')
+  axios.get(`${baseUrl}/employees.json`)
     .then((result) => {
       const allEmployeesObj = result.data;
       const employees = [];

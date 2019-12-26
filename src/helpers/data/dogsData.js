@@ -1,7 +1,7 @@
 import axios from 'axios';
 import apiKeys from '../apiKeys.json';
 
-const baseUrl = apiKeys.firebaseKeys.datbaseURL;
+const baseUrl = apiKeys.firebaseKeys.databaseURL;
 
 const getAllDogs = () => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/dogs.json`)

@@ -8,8 +8,8 @@ import Navbar from '../Navbar/Navbar';
 import DogPen from '../DogPen/DogPen';
 import StaffRoom from '../StaffRoom/StaffRoom';
 
-import dogsData from '../../helpers/data/dogsData';
-import employeesData from '../../helpers/data/employeesData';
+// import dogsData from '../../helpers/data/dogsData';
+// import employeesData from '../../helpers/data/employeesData';
 
 
 firebaseConnection.firebaseApp();
@@ -17,24 +17,6 @@ firebaseConnection.firebaseApp();
 class Home extends React.Component {
   state = {
     authed: false,
-    dogs: [],
-    employees: [],
-  }
-
-  getDogs = () => {
-    const dogs = dogsData.getAllDogs()
-      .then(() => {
-        this.setState({ dogs });
-      })
-      .catch((errFromGetDogs) => console.error(errFromGetDogs));
-  }
-
-  getEmployees = () => {
-    const employees = employeesData.getAllEmployees()
-      .then(() => {
-        this.setState({ employees });
-      })
-      .catch((errFromGetEmployees) => console.error(errFromGetEmployees));
   }
 
   componentDidMount() {
@@ -45,8 +27,6 @@ class Home extends React.Component {
         this.setState({ authed: false });
       }
     });
-    this.getDogs();
-    this.getEmployees();
   }
 
   componentWillUnmount() {
@@ -54,14 +34,14 @@ class Home extends React.Component {
   }
 
   renderView = () => {
-    const { authed, dogs, employees } = this.state;
+    const { authed } = this.state;
     if (!authed) {
       return (<Auth />);
     }
     return (
       <div>
-        <DogPen dogs={dogs} />
-        <StaffRoom employees={employees} />
+        <DogPen />
+        <StaffRoom />
     </div>);
   }
 
