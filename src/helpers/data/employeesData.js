@@ -20,4 +20,6 @@ const getAllEmployees = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-export default { getAllEmployees };
+const getSingleEmployeeById = (employeeId) => axios.get(`${baseUrl}/employees/${employeeId}.json`);
+
+export default { getAllEmployees, getSingleEmployeeById };
