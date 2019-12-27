@@ -11,6 +11,7 @@ import dogShape from '../../helpers/propz/dogShape';
 class WalkSchedule extends React.Component {
   state = {
     walks: [],
+    editMode: false,
   }
 
   static propTypes = {
@@ -30,6 +31,14 @@ class WalkSchedule extends React.Component {
     this.getWalks();
   }
 
+  addWalk = (newWalk) => {
+    walksData.saveWalk(newWalk)
+      .then(() => {
+        this.getWalks();
+      })
+      .catch((errFromAddWalk) => console.error(errFromAddWalk));
+  }
+
   deleteWalk = (walkId) => {
     walksData.deleteWalkById(walkId)
       .then(() => {
@@ -38,8 +47,16 @@ class WalkSchedule extends React.Component {
       .catch((errFromDeleteWalk) => console.error(errFromDeleteWalk));
   }
 
+  setEditMode = () => {
+    this.setState({ editMode: true });
+  }
+
+  cancelEditMode = () => {
+    this.setState({ editMode: false });
+  }
+
   render() {
-    const { walks } = this.state;
+    const { walks, editMode } = this.state;
     const { employees, dogs } = this.props;
     return (
       <div>
@@ -58,12 +75,19 @@ class WalkSchedule extends React.Component {
                 walks.map((walk) => <Walk key={walk.id} walk={walk} deleteWalk={this.deleteWalk} />)
               }
           <tr>
-            <td>Add New Walk</td>
+            <td>
+              {
+                (!editMode) ? <button className="btn btn-success btn-sm" onClick={this.setEditMode}>Add New Walk</button>
+                  : <button className="btn btn-danger btn-sm" onClick={this.cancelEditMode}>Cancel</button>
+              }
+            </td>
             <td></td>
             <td></td>
             <td></td>
           </tr>
-          <WalkForm employees={employees} dogs={dogs}/>
+          {
+            (editMode) && <WalkForm addWalk={this.addWalk} employees={employees} dogs={dogs}/>
+          }
           </tbody>
         </table>
       </div>

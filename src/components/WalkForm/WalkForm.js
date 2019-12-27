@@ -18,6 +18,7 @@ class WalkForm extends React.Component {
   static propTypes = {
     employees: PropTypes.arrayOf(employeeShape.employeeShape),
     dogs: PropTypes.arrayOf(dogShape.dogShape),
+    addWalk: PropTypes.func,
   }
 
   saveDogEntry = (currentDogSelected) => {
@@ -28,16 +29,44 @@ class WalkForm extends React.Component {
     this.setState({ selectedEmployee: currentEmployeeSelected });
   }
 
+  saveWalkEvent = (e) => {
+    const { addWalk } = this.props;
+    const { selectedDate, selectedDog, selectedEmployee } = this.state;
+
+    e.preventDefault();
+    const newWalk = {
+      dogId: selectedDog,
+      date: selectedDate,
+      employeeId: selectedEmployee,
+    };
+    addWalk(newWalk);
+    this.setState({ selectedDog: '', selectedDate: '', selectedEmployee: '' });
+  }
+
+  dateChange = (e) => {
+    e.preventDefault();
+    this.setState({ selectedDate: e.target.value });
+  }
+
   render() {
     const { employees, dogs } = this.props;
+    const { selectedDate } = this.state;
 
     return (
         <tr>
-          <td>
+          <td className="align-content-center">
+          <input
+            type="data"
+            className="form-control col"
+            id="dateInput"
+            placeholder="1/1/2020"
+            value={selectedDate}
+            onChange={this.dateChange}
+          />
           </td>
           <td><DogDD list={dogs} saveDogEntry={this.saveDogEntry}/></td>
           <td><EmployeeDD list={employees} saveEmployeeEntry={this.saveEmployeeEntry} /></td>
-          <td><button className="btn btn-success btn-sm">Save Button</button></td>
+          <td><button className="btn btn-success btn-sm" onClick={this.saveWalkEvent}>Save Button</button></td>
         </tr>
     );
   }
