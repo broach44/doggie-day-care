@@ -20,6 +20,14 @@ class WalkSchedule extends React.Component {
     this.getWalks();
   }
 
+  deleteWalk = (walkId) => {
+    walksData.deleteWalkById(walkId)
+      .then(() => {
+        this.getWalks()
+      })
+      .catch((errFromDeleteWalk) => console.error(errFromDeleteWalk));
+  }
+
   render() {
     const { walks } = this.state;
     return (
@@ -31,11 +39,12 @@ class WalkSchedule extends React.Component {
               <th scope="col">Date</th>
               <th scope="col">Dog</th>
               <th scope="col">Employee</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
               {
-                walks.map((walk) => <Walk key={walk.id} walk={walk} />)
+                walks.map((walk) => <Walk key={walk.id} walk={walk} deleteWalk={this.deleteWalk} />)
               }
           </tbody>
         </table>

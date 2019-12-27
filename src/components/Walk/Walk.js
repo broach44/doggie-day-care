@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import walkShape from '../../helpers/propz/walkShape';
 import employeesData from '../../helpers/data/employeesData';
@@ -12,6 +13,13 @@ class Walk extends React.Component {
 
   static propTypes = {
     walk: walkShape.walkShape,
+    deleteWalk: PropTypes.func,
+  }
+
+  deleteWalkEvent = (e) => {
+    e.preventDefault();
+    const { deleteWalk, walk } = this.props;
+    deleteWalk(walk.id);
   }
 
   getEmployeeName = () => {
@@ -47,6 +55,7 @@ class Walk extends React.Component {
         <td>{walk.date}</td>
         <td>{dogName}</td>
         <td>{employee.firstName} {employee.lastName}</td>
+        <td><button className="btn btn-primary btn-sm" onClick={this.deleteWalkEvent}>Delete Walk</button></td>
       </tr>
     );
   }
