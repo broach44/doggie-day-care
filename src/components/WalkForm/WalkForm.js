@@ -19,6 +19,7 @@ class WalkForm extends React.Component {
     employees: PropTypes.arrayOf(employeeShape.employeeShape),
     dogs: PropTypes.arrayOf(dogShape.dogShape),
     addWalk: PropTypes.func,
+    cancelEditMode: PropTypes.func,
   }
 
   saveDogEntry = (currentDogSelected) => {

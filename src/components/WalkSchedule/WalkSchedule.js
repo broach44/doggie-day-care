@@ -37,6 +37,7 @@ class WalkSchedule extends React.Component {
         this.getWalks();
       })
       .catch((errFromAddWalk) => console.error(errFromAddWalk));
+    this.cancelEditMode();
   }
 
   deleteWalk = (walkId) => {
@@ -86,7 +87,7 @@ class WalkSchedule extends React.Component {
             <td></td>
           </tr>
           {
-            (editMode) && <WalkForm addWalk={this.addWalk} employees={employees} dogs={dogs}/>
+            (editMode) && <WalkForm addWalk={this.addWalk} cancelEditMode={this.cancelEditMode} employees={employees} dogs={dogs}/>
           }
           </tbody>
         </table>
