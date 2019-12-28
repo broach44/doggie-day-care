@@ -73,7 +73,14 @@ class WalkSchedule extends React.Component {
           </thead>
           <tbody>
               {
-                walks.map((walk) => <Walk key={walk.id} walk={walk} deleteWalk={this.deleteWalk} />)
+                walks.map((walk) => <Walk
+                  key={walk.id}
+                  walk={walk}
+                  deleteWalk={this.deleteWalk}
+                  setEditMode={this.setEditMode}
+                  employees={employees}
+                  dogs={dogs}
+                  getWalks={this.getWalks} />)
               }
           <tr>
             <td>
