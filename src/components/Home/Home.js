@@ -11,7 +11,6 @@ import WalkSchedule from '../WalkSchedule/WalkSchedule';
 import employeesData from '../../helpers/data/employeesData';
 import dogsData from '../../helpers/data/dogsData';
 
-
 firebaseConnection.firebaseApp();
 
 class Home extends React.Component {
@@ -62,7 +61,7 @@ class Home extends React.Component {
       <div>
         <DogPen dogs={dogs}/>
         <StaffRoom employees={employees}/>
-        <WalkSchedule employees={employees} dogs={dogs}/>
+        <WalkSchedule employees={employees} dogs={dogs} />
     </div>);
   }
 

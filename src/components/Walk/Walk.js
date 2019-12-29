@@ -73,6 +73,7 @@ class Walk extends React.Component {
   componentDidMount() {
     this.getEmployeeName();
     this.getDogName();
+    this.props.getWalks();
   }
 
   saveDogEntry = (currentDogSelected) => {
@@ -96,7 +97,8 @@ class Walk extends React.Component {
     this.setState({ employeeHeaderTitle: newEmployeeTitle });
   }
 
-  saveUpdatedWalk = () => {
+  saveUpdatedWalk = (e) => {
+    e.preventDefault();
     const { walk, getWalks } = this.props;
     const { selectedDog, selectedEmployee, selectedDate } = this.state;
     const updatedWalk = {

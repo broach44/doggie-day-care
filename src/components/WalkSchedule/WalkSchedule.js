@@ -19,16 +19,16 @@ class WalkSchedule extends React.Component {
     dogs: PropTypes.arrayOf(dogShape.dogShape),
   }
 
+  componentDidMount() {
+    this.getWalks();
+  }
+
   getWalks = () => {
     walksData.getWalksData()
       .then((walks) => {
         this.setState({ walks });
       })
       .catch((errFromGetWalks) => console.error(errFromGetWalks));
-  }
-
-  componentDidMount() {
-    this.getWalks();
   }
 
   addWalk = (newWalk) => {
@@ -46,6 +46,15 @@ class WalkSchedule extends React.Component {
         this.getWalks();
       })
       .catch((errFromDeleteWalk) => console.error(errFromDeleteWalk));
+  }
+
+  updateWalk = (walkId, updatedWalk) => {
+    walksData.updateWalk(walkId, updatedWalk)
+      .then(() => {
+        this.cancelEditMode();
+        this.getWalks();
+      })
+      .catch((errFromUpdateWalk) => console.error(errFromUpdateWalk));
   }
 
   setEditMode = () => {
@@ -80,7 +89,8 @@ class WalkSchedule extends React.Component {
                   setEditMode={this.setEditMode}
                   employees={employees}
                   dogs={dogs}
-                  getWalks={this.getWalks} />)
+                  getWalks={this.getWalks}
+                  updateWalk={this.updateWalk} />)
               }
           <tr>
             <td>
