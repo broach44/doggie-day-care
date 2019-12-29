@@ -8,7 +8,6 @@ import dogShape from '../../helpers/propz/dogShape';
 import walkShape from '../../helpers/propz/walkShape';
 import employeesData from '../../helpers/data/employeesData';
 import dogsData from '../../helpers/data/dogsData';
-import walksData from '../../helpers/data/walksData';
 
 class Walk extends React.Component {
   state = {
@@ -29,6 +28,7 @@ class Walk extends React.Component {
     employees: PropTypes.arrayOf(employeeShape.employeeShape),
     dogs: PropTypes.arrayOf(dogShape.dogShape),
     getWalks: PropTypes.func,
+    updateWalk: PropTypes.func,
   }
 
   deleteWalkEvent = (e) => {
@@ -73,7 +73,6 @@ class Walk extends React.Component {
   componentDidMount() {
     this.getEmployeeName();
     this.getDogName();
-    this.props.getWalks();
   }
 
   saveDogEntry = (currentDogSelected) => {
@@ -99,20 +98,16 @@ class Walk extends React.Component {
 
   saveUpdatedWalk = (e) => {
     e.preventDefault();
-    const { walk, getWalks } = this.props;
+    const { walk, updateWalk } = this.props;
     const { selectedDog, selectedEmployee, selectedDate } = this.state;
     const updatedWalk = {
       dogId: selectedDog,
       employeeId: selectedEmployee,
       date: selectedDate,
     };
-    walksData.updateWalk(walk.id, updatedWalk)
-      .then(() => {
-        getWalks();
-        this.setState({ dogHeaderTitle: 'Choose A Dog' });
-        this.setState({ editWalkMode: false });
-      })
-      .catch((errFromSaveUpdatedWalk) => console.error(errFromSaveUpdatedWalk));
+    updateWalk(walk.id, updatedWalk);
+    this.setState({ dogHeaderTitle: 'Choose A Dog' });
+    this.setState({ editWalkMode: false });
   }
 
   render() {
