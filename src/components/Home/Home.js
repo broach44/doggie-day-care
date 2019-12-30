@@ -10,6 +10,7 @@ import StaffRoom from '../StaffRoom/StaffRoom';
 import WalkSchedule from '../WalkSchedule/WalkSchedule';
 import employeesData from '../../helpers/data/employeesData';
 import dogsData from '../../helpers/data/dogsData';
+import walksData from '../../helpers/data/walksData';
 
 firebaseConnection.firebaseApp();
 
@@ -18,6 +19,7 @@ class Home extends React.Component {
     authed: false,
     employees: [],
     dogs: [],
+    walks: [],
   }
 
   getEmployees = () => {
@@ -36,6 +38,14 @@ class Home extends React.Component {
       .catch((errFromGetDogs) => console.error(errFromGetDogs));
   }
 
+  getWalks = () => {
+    walksData.getWalksData()
+      .then((walks) => {
+        this.setState({ walks });
+      })
+      .catch((errFromGetWalks) => console.error(errFromGetWalks));
+  }
+
   componentDidMount() {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -46,6 +56,7 @@ class Home extends React.Component {
     });
     this.getEmployees();
     this.getDogs();
+    this.getWalks();
   }
 
   componentWillUnmount() {
@@ -53,7 +64,12 @@ class Home extends React.Component {
   }
 
   renderView = () => {
-    const { authed, employees, dogs } = this.state;
+    const {
+      authed,
+      employees,
+      dogs,
+      walks,
+    } = this.state;
     if (!authed) {
       return (<Auth />);
     }
@@ -61,7 +77,7 @@ class Home extends React.Component {
       <div>
         <DogPen dogs={dogs}/>
         <StaffRoom employees={employees}/>
-        <WalkSchedule employees={employees} dogs={dogs} />
+        <WalkSchedule employees={employees} dogs={dogs} getWalks={this.getWalks} walks={walks} />
     </div>);
   }
 

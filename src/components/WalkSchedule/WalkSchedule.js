@@ -7,38 +7,41 @@ import WalkForm from '../WalkForm/WalkForm';
 import walksData from '../../helpers/data/walksData';
 import employeeShape from '../../helpers/propz/employeeShape';
 import dogShape from '../../helpers/propz/dogShape';
+import walkShape from '../../helpers/propz/walkShape';
 
 class WalkSchedule extends React.Component {
   state = {
-    walks: [],
+    // walks: [],
     editMode: false,
   }
 
   static propTypes = {
     employees: PropTypes.arrayOf(employeeShape.employeeShape),
     dogs: PropTypes.arrayOf(dogShape.dogShape),
+    getWalks: PropTypes.func,
+    walks: PropTypes.arrayOf(walkShape.walkShape),
   }
 
-  componentDidMount() {
-    this.getWalks();
-  }
+  // componentDidMount() {
+  //   const { walks } = this.props;
+  // }
 
-  componentWillUnmount() {
-    this.removeListener();
-  }
+  // componentWillUnmount() {
+  //   this.removeListener();
+  // }
 
-  getWalks = () => {
-    walksData.getWalksData()
-      .then((walks) => {
-        this.setState({ walks });
-      })
-      .catch((errFromGetWalks) => console.error(errFromGetWalks));
-  }
+  // getWalks = () => {
+  //   walksData.getWalksData()
+  //     .then((walks) => {
+  //       this.setState({ walks });
+  //     })
+  //     .catch((errFromGetWalks) => console.error(errFromGetWalks));
+  // }
 
   addWalk = (newWalk) => {
     walksData.saveWalk(newWalk)
       .then(() => {
-        this.getWalks();
+        this.props.getWalks();
       })
       .catch((errFromAddWalk) => console.error(errFromAddWalk));
     this.cancelEditMode();
@@ -47,7 +50,7 @@ class WalkSchedule extends React.Component {
   deleteWalk = (walkId) => {
     walksData.deleteWalkById(walkId)
       .then(() => {
-        this.getWalks();
+        this.props.getWalks();
       })
       .catch((errFromDeleteWalk) => console.error(errFromDeleteWalk));
   }
@@ -55,7 +58,7 @@ class WalkSchedule extends React.Component {
   updateWalk = (walkId, updatedWalkObj) => {
     walksData.updateWalk(walkId, updatedWalkObj)
       .then(() => {
-        this.getWalks();
+        this.props.getWalks();
       })
       .catch((errFromUpdateWalk) => console.error(errFromUpdateWalk));
   }
@@ -69,8 +72,8 @@ class WalkSchedule extends React.Component {
   }
 
   render() {
-    const { walks, editMode } = this.state;
-    const { employees, dogs } = this.props;
+    const { editMode } = this.state;
+    const { walks, employees, dogs } = this.props;
     return (
       <div>
         <h2 className="m-3">Walk Schedule Component</h2>
