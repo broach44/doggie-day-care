@@ -23,6 +23,10 @@ class WalkSchedule extends React.Component {
     this.getWalks();
   }
 
+  componentWillUnmount() {
+    this.removeListener();
+  }
+
   getWalks = () => {
     walksData.getWalksData()
       .then((walks) => {
@@ -48,10 +52,9 @@ class WalkSchedule extends React.Component {
       .catch((errFromDeleteWalk) => console.error(errFromDeleteWalk));
   }
 
-  updateWalk = (walkId, updatedWalk) => {
-    walksData.updateWalk(walkId, updatedWalk)
+  updateWalk = (walkId, updatedWalkObj) => {
+    walksData.updateWalk(walkId, updatedWalkObj)
       .then(() => {
-        this.cancelEditMode();
         this.getWalks();
       })
       .catch((errFromUpdateWalk) => console.error(errFromUpdateWalk));
@@ -86,10 +89,8 @@ class WalkSchedule extends React.Component {
                   key={walk.id}
                   walk={walk}
                   deleteWalk={this.deleteWalk}
-                  setEditMode={this.setEditMode}
                   employees={employees}
                   dogs={dogs}
-                  getWalks={this.getWalks}
                   updateWalk={this.updateWalk} />)
               }
           <tr>

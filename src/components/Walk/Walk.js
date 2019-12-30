@@ -27,7 +27,6 @@ class Walk extends React.Component {
     deleteWalk: PropTypes.func,
     employees: PropTypes.arrayOf(employeeShape.employeeShape),
     dogs: PropTypes.arrayOf(dogShape.dogShape),
-    getWalks: PropTypes.func,
     updateWalk: PropTypes.func,
   }
 
@@ -53,21 +52,6 @@ class Walk extends React.Component {
         this.setState({ dogName: dogInfo.data.dogName });
       })
       .catch((errFromGetDogName) => console.error(errFromGetDogName));
-  }
-
-  setUpdateWalkMode = (e) => {
-    e.preventDefault();
-    const { walk } = this.props;
-    const { dogName, employee } = this.state;
-    this.setState({
-      editWalkMode: true,
-      walkToUpdate: walk.id,
-      dogHeaderTitle: dogName,
-      employeeHeaderTitle: `${employee.firstName} ${employee.lastName}`,
-      selectedDog: walk.dogId,
-      selectedDate: walk.date,
-      selectedEmployee: walk.employeeId,
-    });
   }
 
   componentDidMount() {
@@ -96,7 +80,22 @@ class Walk extends React.Component {
     this.setState({ employeeHeaderTitle: newEmployeeTitle });
   }
 
-  saveUpdatedWalk = (e) => {
+  setUpdateWalkMode = (e) => {
+    e.preventDefault();
+    const { walk } = this.props;
+    const { dogName, employee } = this.state;
+    this.setState({
+      editWalkMode: true,
+      walkToUpdate: walk.id,
+      dogHeaderTitle: dogName,
+      employeeHeaderTitle: `${employee.firstName} ${employee.lastName}`,
+      selectedDog: walk.dogId,
+      selectedDate: walk.date,
+      selectedEmployee: walk.employeeId,
+    });
+  }
+
+  updateWalkEvent = (e) => {
     e.preventDefault();
     const { walk, updateWalk } = this.props;
     const { selectedDog, selectedEmployee, selectedDate } = this.state;
@@ -149,7 +148,7 @@ class Walk extends React.Component {
         }
         {
           (editWalkMode)
-            ? <td><button className="btn btn-danger btn-sm" onClick={this.saveUpdatedWalk}>Save Updates</button></td>
+            ? <td><button className="btn btn-danger btn-sm" onClick={this.updateWalkEvent}>Save Updates</button></td>
             : <td>
                 <button className="btn btn-primary btn-sm" onClick={this.deleteWalkEvent}>Delete Walk</button>
                 <button className="btn btn-success btn-sm ml-2" onClick={this.setUpdateWalkMode} dogs={dogs} employees={employees}>Update Walk</button>
