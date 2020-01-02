@@ -6,12 +6,14 @@ import employeeShape from '../../helpers/propz/employeeShape';
 class EmployeeDropdown extends React.Component {
   state = {
     listOpen: false,
-    headerTitle: 'Choose an Employee',
+    headerTitle: '',
   }
 
   static propTypes = {
-    list: PropTypes.arrayOf(employeeShape.employeeShape),
+    employees: PropTypes.arrayOf(employeeShape.employeeShape),
     saveEmployeeEntry: PropTypes.func,
+    employeeHeaderTitle: PropTypes.string,
+    updateEmployeeHeaderTitle: PropTypes.func,
   }
 
   // ***Todo: Work on function below to close the toggle when clicking on body***
@@ -28,23 +30,24 @@ class EmployeeDropdown extends React.Component {
   }
 
   saveEntryEvent = (e) => {
+    const { saveEmployeeEntry, updateEmployeeHeaderTitle } = this.props;
     e.preventDefault();
-    this.props.saveEmployeeEntry(e.target.id);
+    saveEmployeeEntry(e.target.id);
     this.toggleList();
-    this.setState({ headerTitle: e.target.innerHTML });
+    updateEmployeeHeaderTitle(e.target.innerHTML);
   }
 
   render() {
-    const { list } = this.props;
-    const { listOpen, headerTitle } = this.state;
+    const { employees, employeeHeaderTitle } = this.props;
+    const { listOpen } = this.state;
     return (
       <div className="dd-wrapper">
       <button className="dd-header btn btn-secondary btn-sm" onClick={() => this.toggleList()}>
-        <div className="dd-header-title">{headerTitle}</div>
+        <div className="dd-header-title">{employeeHeaderTitle}</div>
       </button>
       { listOpen
         && <div className="dd-list">
-          {list.map((item) => (
+          {employees.map((item) => (
             <li className="dd-list-item" key={item.id} onClick={this.saveEntryEvent} id={item.id}>{item.firstName} {item.lastName}</li>
           ))}
         </div>

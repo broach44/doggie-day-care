@@ -1,40 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import walksData from '../../helpers/data/walksData';
 
 import Walk from '../Walk/Walk';
 import WalkForm from '../WalkForm/WalkForm';
 
-import walksData from '../../helpers/data/walksData';
 import employeeShape from '../../helpers/propz/employeeShape';
 import dogShape from '../../helpers/propz/dogShape';
+import walkShape from '../../helpers/propz/walkShape';
 
 class WalkSchedule extends React.Component {
   state = {
-    walks: [],
     editMode: false,
   }
 
   static propTypes = {
     employees: PropTypes.arrayOf(employeeShape.employeeShape),
     dogs: PropTypes.arrayOf(dogShape.dogShape),
-  }
-
-  getWalks = () => {
-    walksData.getWalksData()
-      .then((walks) => {
-        this.setState({ walks });
-      })
-      .catch((errFromGetWalks) => console.error(errFromGetWalks));
+    getWalks: PropTypes.func,
+    walks: PropTypes.arrayOf(walkShape.walkShape),
   }
 
   componentDidMount() {
-    this.getWalks();
+    this.props.getWalks();
   }
 
   addWalk = (newWalk) => {
     walksData.saveWalk(newWalk)
       .then(() => {
-        this.getWalks();
+        this.props.getWalks();
       })
       .catch((errFromAddWalk) => console.error(errFromAddWalk));
     this.cancelEditMode();
@@ -43,9 +37,17 @@ class WalkSchedule extends React.Component {
   deleteWalk = (walkId) => {
     walksData.deleteWalkById(walkId)
       .then(() => {
-        this.getWalks();
+        this.props.getWalks();
       })
       .catch((errFromDeleteWalk) => console.error(errFromDeleteWalk));
+  }
+
+  updateWalk = (walkId, updatedWalkObj) => {
+    walksData.updateWalk(walkId, updatedWalkObj)
+      .then(() => {
+        this.props.getWalks();
+      })
+      .catch((errFromUpdateWalk) => console.error(errFromUpdateWalk));
   }
 
   setEditMode = () => {
@@ -57,8 +59,8 @@ class WalkSchedule extends React.Component {
   }
 
   render() {
-    const { walks, editMode } = this.state;
-    const { employees, dogs } = this.props;
+    const { editMode } = this.state;
+    const { walks, employees, dogs } = this.props;
     return (
       <div>
         <h2 className="m-3">Walk Schedule Component</h2>
@@ -73,7 +75,13 @@ class WalkSchedule extends React.Component {
           </thead>
           <tbody>
               {
-                walks.map((walk) => <Walk key={walk.id} walk={walk} deleteWalk={this.deleteWalk} />)
+                walks.map((walk) => <Walk
+                  key={walk.id}
+                  walk={walk}
+                  deleteWalk={this.deleteWalk}
+                  employees={employees}
+                  dogs={dogs}
+                  updateWalk={this.updateWalk} />)
               }
           <tr>
             <td>
@@ -87,7 +95,7 @@ class WalkSchedule extends React.Component {
             <td></td>
           </tr>
           {
-            (editMode) && <WalkForm addWalk={this.addWalk} cancelEditMode={this.cancelEditMode} employees={employees} dogs={dogs}/>
+            (editMode) && <WalkForm addWalk={this.addWalk} employees={employees} dogs={dogs}/>
           }
           </tbody>
         </table>

@@ -6,12 +6,14 @@ import dogShape from '../../helpers/propz/dogShape';
 class DogDropdown extends React.Component {
   state = {
     listOpen: false,
-    headerTitle: 'Choose a Dog',
+    headerTitle: '',
   }
 
   static propTypes = {
-    list: PropTypes.arrayOf(dogShape.dogShape),
+    dogs: PropTypes.arrayOf(dogShape.dogShape),
     saveDogEntry: PropTypes.func,
+    dogHeaderTitle: PropTypes.string,
+    updateDogHeaderTitle: PropTypes.func,
   }
 
   // ***Todo: Work on function below to close the toggle when clicking on body***
@@ -28,23 +30,25 @@ class DogDropdown extends React.Component {
   }
 
   saveEntryEvent = (e) => {
+    const { saveDogEntry, updateDogHeaderTitle } = this.props;
+
     e.preventDefault();
-    this.props.saveDogEntry(e.target.id);
+    saveDogEntry(e.target.id);
     this.toggleList();
-    this.setState({ headerTitle: e.target.innerHTML });
+    updateDogHeaderTitle(e.target.innerHTML);
   }
 
   render() {
-    const { list } = this.props;
-    const { listOpen, headerTitle } = this.state;
+    const { dogs, dogHeaderTitle } = this.props;
+    const { listOpen } = this.state;
     return (
       <div className="dd-wrapper">
       <button className="dd-header btn btn-secondary btn-sm" onClick={() => this.toggleList()}>
-        <div className="dd-header-title">{headerTitle}</div>
+        <div className="dd-header-title">{dogHeaderTitle}</div>
       </button>
       { listOpen
         && <div className="dd-list">
-          {list.map((item) => (
+          {dogs.map((item) => (
             <li className="dd-list-item" key={item.id} onClick={this.saveEntryEvent} id={item.id}>{item.dogName}</li>
           ))}
         </div>
