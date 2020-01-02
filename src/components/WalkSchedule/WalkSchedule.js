@@ -11,7 +11,6 @@ import walkShape from '../../helpers/propz/walkShape';
 
 class WalkSchedule extends React.Component {
   state = {
-    // walks: [],
     editMode: false,
   }
 
@@ -96,7 +95,7 @@ class WalkSchedule extends React.Component {
             <td></td>
           </tr>
           {
-            (editMode) && <WalkForm addWalk={this.addWalk} cancelEditMode={this.cancelEditMode} employees={employees} dogs={dogs}/>
+            (editMode) && <WalkForm addWalk={this.addWalk} employees={employees} dogs={dogs}/>
           }
           </tbody>
         </table>

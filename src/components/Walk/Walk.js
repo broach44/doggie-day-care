@@ -71,11 +71,10 @@ class Walk extends React.Component {
   setUpdateWalkMode = (e) => {
     e.preventDefault();
     const { walk } = this.props;
-    const { dogName } = this.state;
     this.setState({
       editWalkMode: true,
       walkToUpdate: walk.id,
-      dogHeaderTitle: dogName,
+      dogHeaderTitle: this.getDogName(),
       employeeHeaderTitle: this.getEmployeeName(),
       selectedDog: walk.dogId,
       selectedDate: walk.date,
