@@ -6,8 +6,6 @@ import DogDD from '../DogDropdown/DogDropdown';
 import employeeShape from '../../helpers/propz/employeeShape';
 import dogShape from '../../helpers/propz/dogShape';
 import walkShape from '../../helpers/propz/walkShape';
-import employeesData from '../../helpers/data/employeesData';
-import dogsData from '../../helpers/data/dogsData';
 
 class Walk extends React.Component {
   state = {
@@ -37,26 +35,16 @@ class Walk extends React.Component {
   }
 
   getEmployeeName = () => {
-    const { walk } = this.props;
-    employeesData.getSingleEmployeeById(walk.employeeId)
-      .then((employeeInfo) => {
-        this.setState({ employee: employeeInfo.data });
-      })
-      .catch((errFromGetEmployeeName) => console.error(errFromGetEmployeeName));
+    const { walk, employees } = this.props;
+    const currentEE = employees.find((employee) => employee.id === walk.employeeId);
+    const employeeFullName = `${currentEE.firstName} ${currentEE.lastName}`;
+    return employeeFullName;
   }
 
   getDogName = () => {
-    const { walk } = this.props;
-    dogsData.getSingleDogById(walk.dogId)
-      .then((dogInfo) => {
-        this.setState({ dogName: dogInfo.data.dogName });
-      })
-      .catch((errFromGetDogName) => console.error(errFromGetDogName));
-  }
-
-  componentDidMount() {
-    this.getEmployeeName();
-    this.getDogName();
+    const { walk, dogs } = this.props;
+    const currentDog = dogs.find((dog) => dog.id === walk.dogId);
+    return currentDog.dogName;
   }
 
   saveDogEntry = (currentDogSelected) => {
@@ -83,12 +71,12 @@ class Walk extends React.Component {
   setUpdateWalkMode = (e) => {
     e.preventDefault();
     const { walk } = this.props;
-    const { dogName, employee } = this.state;
+    const { dogName } = this.state;
     this.setState({
       editWalkMode: true,
       walkToUpdate: walk.id,
       dogHeaderTitle: dogName,
-      employeeHeaderTitle: `${employee.firstName} ${employee.lastName}`,
+      employeeHeaderTitle: this.getEmployeeName(),
       selectedDog: walk.dogId,
       selectedDate: walk.date,
       selectedEmployee: walk.employeeId,
@@ -112,8 +100,6 @@ class Walk extends React.Component {
   render() {
     const { walk, employees, dogs } = this.props;
     const {
-      employee,
-      dogName,
       editWalkMode,
       dogHeaderTitle,
       employeeHeaderTitle,
@@ -139,12 +125,12 @@ class Walk extends React.Component {
         {
           (editWalkMode)
             ? <td><DogDD dogs={dogs} saveDogEntry={this.saveDogEntry} dogHeaderTitle={dogHeaderTitle} updateDogHeaderTitle={this.updateDogHeaderTitle} /></td>
-            : <td>{dogName}</td>
+            : <td>{this.getDogName()}</td>
         }
         {
           (editWalkMode)
             ? <td><EmployeeDD employees={employees} saveEmployeeEntry={this.saveEmployeeEntry} employeeHeaderTitle={employeeHeaderTitle} updateEmployeeHeaderTitle={this.updateEmployeeHeaderTitle} /></td>
-            : <td>{employee.firstName} {employee.lastName}</td>
+            : <td>{this.getEmployeeName()}</td>
         }
         {
           (editWalkMode)

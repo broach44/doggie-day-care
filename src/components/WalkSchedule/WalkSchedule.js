@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import walksData from '../../helpers/data/walksData';
 
 import Walk from '../Walk/Walk';
 import WalkForm from '../WalkForm/WalkForm';
 
-import walksData from '../../helpers/data/walksData';
 import employeeShape from '../../helpers/propz/employeeShape';
 import dogShape from '../../helpers/propz/dogShape';
 import walkShape from '../../helpers/propz/walkShape';
@@ -22,21 +22,9 @@ class WalkSchedule extends React.Component {
     walks: PropTypes.arrayOf(walkShape.walkShape),
   }
 
-  // componentDidMount() {
-  //   const { walks } = this.props;
-  // }
-
-  // componentWillUnmount() {
-  //   this.removeListener();
-  // }
-
-  // getWalks = () => {
-  //   walksData.getWalksData()
-  //     .then((walks) => {
-  //       this.setState({ walks });
-  //     })
-  //     .catch((errFromGetWalks) => console.error(errFromGetWalks));
-  // }
+  componentDidMount() {
+    this.props.getWalks();
+  }
 
   addWalk = (newWalk) => {
     walksData.saveWalk(newWalk)

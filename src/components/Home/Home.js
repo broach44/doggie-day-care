@@ -2,14 +2,15 @@ import React from 'react';
 
 import firebase from 'firebase/app';
 
-import firebaseConnection from '../../helpers/data/connection';
 import Auth from '../Auth/Auth';
-import Navbar from '../Navbar/Navbar';
 import DogPen from '../DogPen/DogPen';
+import Navbar from '../Navbar/Navbar';
 import StaffRoom from '../StaffRoom/StaffRoom';
 import WalkSchedule from '../WalkSchedule/WalkSchedule';
-import employeesData from '../../helpers/data/employeesData';
+
 import dogsData from '../../helpers/data/dogsData';
+import employeesData from '../../helpers/data/employeesData';
+import firebaseConnection from '../../helpers/data/connection';
 import walksData from '../../helpers/data/walksData';
 
 firebaseConnection.firebaseApp();
@@ -49,14 +50,14 @@ class Home extends React.Component {
   componentDidMount() {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        this.getEmployees();
+        this.getDogs();
+        this.getWalks();
         this.setState({ authed: true });
       } else {
         this.setState({ authed: false });
       }
     });
-    this.getEmployees();
-    this.getDogs();
-    this.getWalks();
   }
 
   componentWillUnmount() {
