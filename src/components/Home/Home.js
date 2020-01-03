@@ -21,6 +21,7 @@ class Home extends React.Component {
     employees: [],
     dogs: [],
     walks: [],
+    view: 'Home',
   }
 
   getEmployees = () => {
@@ -64,29 +65,86 @@ class Home extends React.Component {
     this.removeListener();
   }
 
+  navToDogView = (e) => {
+    e.preventDefault();
+    this.setState({ view: 'DogPen' });
+  }
+
+  navToStaffView = (e) => {
+    e.preventDefault();
+    this.setState({ view: 'StaffRoom' });
+  }
+
+  navToScheduleView = (e) => {
+    e.preventDefault();
+    this.setState({ view: 'WalkSchedule' });
+  }
+
+  setHomeView = () => {
+    this.setState({ view: 'Home' });
+  }
+
   renderView = () => {
     const {
       authed,
       employees,
       dogs,
       walks,
+      view,
     } = this.state;
     if (!authed) {
       return (<Auth />);
     }
+    if (view === 'DogPen') {
+      return (
+        <div>
+            <div>
+              <button className="btn btn-warning btn-lg m-2 active" id="DogPen">Dogs</button>
+              <button className="btn btn-warning btn-lg m-2" onClick={this.navToStaffView} id="StaffRoom">Staff</button>
+              <button className="btn btn-warning btn-lg m-2" onClick={this.navToScheduleView} id="WalkSchedule">Schedule</button>
+            </div>
+            <DogPen dogs={dogs}/>
+        </div>
+      );
+    }
+    if (view === 'StaffRoom') {
+      return (
+        <div>
+          <div>
+            <button className="btn btn-warning btn-lg m-2 " onClick={this.navToDogView} id="DogPen">Dogs</button>
+            <button className="btn btn-warning btn-lg m-2 active" id="StaffRoom">Staff</button>
+            <button className="btn btn-warning btn-lg m-2" onClick={this.navToScheduleView} id="WalkSchedule">Schedule</button>
+          </div>
+          <StaffRoom employees={employees}/>
+        </div>
+      );
+    }
+    if (view === 'WalkSchedule') {
+      return (
+        <div>
+          <div>
+            <button className="btn btn-warning btn-lg m-2" onClick={this.navToDogView} id="DogPen">Dogs</button>
+            <button className="btn btn-warning btn-lg m-2" onClick={this.navToStaffView} id="StaffRoom">Staff</button>
+            <button className="btn btn-warning btn-lg m-2 active" id="WalkSchedule">Schedule</button>
+          </div>
+          <WalkSchedule employees={employees} dogs={dogs} getWalks={this.getWalks} walks={walks} />
+        </div>
+      );
+    }
     return (
       <div>
-        <DogPen dogs={dogs}/>
-        <StaffRoom employees={employees}/>
-        <WalkSchedule employees={employees} dogs={dogs} getWalks={this.getWalks} walks={walks} />
-    </div>);
+        <button className="btn btn-warning btn-lg m-2" onClick={this.navToDogView} id="DogPen">Dogs</button>
+        <button className="btn btn-warning btn-lg m-2" onClick={this.navToStaffView} id="StaffRoom">Staff</button>
+        <button className="btn btn-warning btn-lg m-2" onClick={this.navToScheduleView} id="WalkSchedule">Schedule</button>
+      </div>
+    );
   }
 
   render() {
     const { authed } = this.state;
     return (
       <div className="Home">
-        <Navbar authed={authed} />
+        <Navbar authed={authed} setHomeView={this.setHomeView} />
         {
           this.renderView()
         }
