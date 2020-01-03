@@ -132,10 +132,10 @@ class Home extends React.Component {
       );
     }
     return (
-      <div>
-        <button className="btn btn-warning btn-lg m-2" onClick={this.navToDogView} id="DogPen">Dogs</button>
-        <button className="btn btn-warning btn-lg m-2" onClick={this.navToStaffView} id="StaffRoom">Staff</button>
-        <button className="btn btn-warning btn-lg m-2" onClick={this.navToScheduleView} id="WalkSchedule">Schedule</button>
+      <div className="d-flex justify-content-between">
+        <div className="nav-div m-2" onClick={this.navToDogView} id="DogPen"><h1>Dogs</h1></div>
+        <div className="nav-div m-2" onClick={this.navToStaffView} id="StaffRoom"><h1>Staff</h1></div>
+        <div className="nav-div m-2" onClick={this.navToScheduleView} id="WalkSchedule"><h1>Schedule</h1></div>
       </div>
     );
   }
