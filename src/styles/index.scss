@@ -1,4 +1,6 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
 @import './variables';
+@import url('https://fonts.googleapis.com/css?family=Modak&display=swap');
 
 body {
   margin: 0;
@@ -7,11 +9,40 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: $orange;
+  background-color: $cream;
+
+  .btn {
+    background-color: $yellow;
+
+    &:focus {
+      background-color: $orange!important;
+    }
+  }
+
+  .navbar {
+    padding: 0;
+    background-color: $blue;
+    .navbar-brand {
+      margin: .2em;
+      color: $darkbrown;
+    }
+    .logout-btn {
+      background-color: $orange;
+      font-weight: 500;
+      right: 2%;
+      position: absolute;
+    }
+  }
+
+  h1 {
+    font-size: 35px!important;
+    margin: .5em;
+  }
+
+  .thead-light {
+    background-color: red!important;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+
 

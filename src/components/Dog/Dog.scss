@@ -1,0 +1,26 @@
+@import '../../styles/variables';
+.dog-card {
+  background-color: $darkcream!important;
+  box-shadow: 5px 5px 10px rgb(53, 53, 53);
+  padding: 0;
+  transform: rotate(5deg);
+
+  .dog-img {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    transform: rotate(-5deg);
+    box-shadow: 5px 5px 10px rgb(53, 53, 53);
+  }
+
+  .paper-clip-img {
+    width: 10%;
+    height: auto;
+    position: absolute;
+    z-index: 5;
+    right: 25%;
+    top: -5%;
+  }
+
+}
+

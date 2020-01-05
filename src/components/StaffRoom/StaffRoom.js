@@ -16,7 +16,7 @@ class StaffRoom extends React.Component {
     return (
       <div>
         <h2>Staff Room</h2>
-        <div className="row">
+        <div className="row justify-content-center">
         {
           employees.map((employee) => <Employee key={employee.id} employee={employee} />)
         }
