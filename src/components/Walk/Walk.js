@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import WalkForm from '../WalkForm/WalkForm';
+
 import EmployeeDD from '../EmployeeDropdown/EmployeeDropdown';
 import DogDD from '../DogDropdown/DogDropdown';
 import employeeShape from '../../helpers/propz/employeeShape';
@@ -12,7 +14,6 @@ class Walk extends React.Component {
     employee: {},
     dogName: '',
     walkToUpdate: '',
-    editWalkMode: false,
     dogHeaderTitle: 'Choose A Dog',
     employeeHeaderTitle: 'Choose An Employee',
     selectedEmployee: '',
@@ -26,6 +27,7 @@ class Walk extends React.Component {
     employees: PropTypes.arrayOf(employeeShape.employeeShape),
     dogs: PropTypes.arrayOf(dogShape.dogShape),
     updateWalk: PropTypes.func,
+    editMode: PropTypes.string,
   }
 
   deleteWalkEvent = (e) => {
@@ -128,7 +130,14 @@ class Walk extends React.Component {
         }
         {
           (editWalkMode)
-            ? <td><EmployeeDD employees={employees} saveEmployeeEntry={this.saveEmployeeEntry} employeeHeaderTitle={employeeHeaderTitle} updateEmployeeHeaderTitle={this.updateEmployeeHeaderTitle} /></td>
+            ? <td>
+                <EmployeeDD
+                  employees={employees}
+                  saveEmployeeEntry={this.saveEmployeeEntry}
+                  employeeHeaderTitle={employeeHeaderTitle}
+                  updateEmployeeHeaderTitle={this.updateEmployeeHeaderTitle}
+                />
+              </td>
             : <td>{this.getEmployeeName()}</td>
         }
         {

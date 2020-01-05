@@ -21,6 +21,8 @@ class WalkForm extends React.Component {
     employees: PropTypes.arrayOf(employeeShape.employeeShape),
     dogs: PropTypes.arrayOf(dogShape.dogShape),
     addWalk: PropTypes.func,
+    updateWalk: PropTypes.func,
+    editMode: PropTypes.string,
   }
 
   saveDogEntry = (currentDogSelected) => {
@@ -40,7 +42,7 @@ class WalkForm extends React.Component {
   }
 
   saveWalkEvent = (e) => {
-    const { addWalk } = this.props;
+    const { addWalk, editMode } = this.props;
     const { selectedDate, selectedDog, selectedEmployee } = this.state;
 
     e.preventDefault();
@@ -49,7 +51,10 @@ class WalkForm extends React.Component {
       date: selectedDate,
       employeeId: selectedEmployee,
     };
-    addWalk(newWalk);
+    // const walkToUpdate = walkId;
+    if (editMode === 'new walk') {
+      addWalk(newWalk);
+    }
     this.setState({ selectedDog: '', selectedDate: '', selectedEmployee: '' });
   }
 

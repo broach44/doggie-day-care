@@ -11,7 +11,7 @@ import walkShape from '../../helpers/propz/walkShape';
 
 class WalkSchedule extends React.Component {
   state = {
-    editMode: false,
+    editMode: 'none',
   }
 
   static propTypes = {
@@ -50,12 +50,16 @@ class WalkSchedule extends React.Component {
       .catch((errFromUpdateWalk) => console.error(errFromUpdateWalk));
   }
 
-  setEditMode = () => {
-    this.setState({ editMode: true });
+  setEditNewMode = () => {
+    this.setState({ editMode: 'new walk' });
+  }
+
+  setEditUpdateMode = () => {
+    this.setState({ editMode: 'update walk' });
   }
 
   cancelEditMode = () => {
-    this.setState({ editMode: false });
+    this.setState({ editMode: 'none' });
   }
 
   render() {
@@ -81,12 +85,13 @@ class WalkSchedule extends React.Component {
                   deleteWalk={this.deleteWalk}
                   employees={employees}
                   dogs={dogs}
-                  updateWalk={this.updateWalk} />)
+                  updateWalk={this.updateWalk}
+                  editMode={editMode} />)
               }
           <tr>
             <td>
               {
-                (!editMode) ? <button className="btn btn-success btn-sm" onClick={this.setEditMode}>Add New Walk</button>
+                (editMode === 'none') ? <button className="btn btn-success btn-sm" onClick={this.setEditNewMode}>Add New Walk</button>
                   : <button className="btn btn-danger btn-sm" onClick={this.cancelEditMode}>Cancel</button>
               }
             </td>
@@ -95,7 +100,7 @@ class WalkSchedule extends React.Component {
             <td></td>
           </tr>
           {
-            (editMode) && <WalkForm addWalk={this.addWalk} employees={employees} dogs={dogs}/>
+            (editMode === 'new walk') && <WalkForm addWalk={this.addWalk} employees={employees} dogs={dogs} editMode={editMode} updateWalk={this.updateWalk} />
           }
           </tbody>
         </table>
