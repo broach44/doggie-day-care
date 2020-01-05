@@ -65,8 +65,8 @@ class WalkSchedule extends React.Component {
       <div>
         <h2 className="m-3">Walk Schedule Component</h2>
         <table className="table">
-          <thead className="thead-dark">
-            <tr>
+          <thead className="thead-light">
+            <tr className="bg-blue">
               <th scope="col">Date</th>
               <th scope="col">Dog</th>
               <th scope="col">Employee</th>

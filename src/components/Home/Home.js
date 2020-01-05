@@ -13,6 +13,8 @@ import employeesData from '../../helpers/data/employeesData';
 import firebaseConnection from '../../helpers/data/connection';
 import walksData from '../../helpers/data/walksData';
 
+import './Home.scss';
+
 firebaseConnection.firebaseApp();
 
 class Home extends React.Component {
@@ -99,9 +101,9 @@ class Home extends React.Component {
       return (
         <div>
             <div>
-              <button className="btn btn-warning btn-lg m-2 active" id="DogPen">Dogs</button>
-              <button className="btn btn-warning btn-lg m-2" onClick={this.navToStaffView} id="StaffRoom">Staff</button>
-              <button className="btn btn-warning btn-lg m-2" onClick={this.navToScheduleView} id="WalkSchedule">Schedule</button>
+              <button className="btn btn-primary btn-lg m-2 active" id="DogPen">Dogs</button>
+              <button className="btn btn-primary btn-lg m-2" onClick={this.navToStaffView} id="StaffRoom">Staff</button>
+              <button className="btn btn-primary btn-lg m-2" onClick={this.navToScheduleView} id="WalkSchedule">Schedule</button>
             </div>
             <DogPen dogs={dogs}/>
         </div>
@@ -111,9 +113,9 @@ class Home extends React.Component {
       return (
         <div>
           <div>
-            <button className="btn btn-warning btn-lg m-2 " onClick={this.navToDogView} id="DogPen">Dogs</button>
-            <button className="btn btn-warning btn-lg m-2 active" id="StaffRoom">Staff</button>
-            <button className="btn btn-warning btn-lg m-2" onClick={this.navToScheduleView} id="WalkSchedule">Schedule</button>
+            <button className="btn btn-primary btn-lg m-2 " onClick={this.navToDogView} id="DogPen">Dogs</button>
+            <button className="btn btn-primary btn-lg m-2 active" id="StaffRoom">Staff</button>
+            <button className="btn btn-primary btn-lg m-2" onClick={this.navToScheduleView} id="WalkSchedule">Schedule</button>
           </div>
           <StaffRoom employees={employees}/>
         </div>
@@ -123,19 +125,38 @@ class Home extends React.Component {
       return (
         <div>
           <div>
-            <button className="btn btn-warning btn-lg m-2" onClick={this.navToDogView} id="DogPen">Dogs</button>
-            <button className="btn btn-warning btn-lg m-2" onClick={this.navToStaffView} id="StaffRoom">Staff</button>
-            <button className="btn btn-warning btn-lg m-2 active" id="WalkSchedule">Schedule</button>
+            <button className="btn btn-primary btn-lg m-2" onClick={this.navToDogView} id="DogPen">Dogs</button>
+            <button className="btn btn-primary btn-lg m-2" onClick={this.navToStaffView} id="StaffRoom">Staff</button>
+            <button className="btn btn-primary btn-lg m-2 active" id="WalkSchedule">Schedule</button>
           </div>
           <WalkSchedule employees={employees} dogs={dogs} getWalks={this.getWalks} walks={walks} />
         </div>
       );
     }
     return (
-      <div className="d-flex justify-content-between">
-        <div className="nav-div m-2" onClick={this.navToDogView} id="DogPen"><h1>Dogs</h1></div>
-        <div className="nav-div m-2" onClick={this.navToStaffView} id="StaffRoom"><h1>Staff</h1></div>
-        <div className="nav-div m-2" onClick={this.navToScheduleView} id="WalkSchedule"><h1>Schedule</h1></div>
+      <div className="nav-row row justify-content-around">
+        <div className="nav-div card col-4 bg-dark text-white DogPenDiv" onClick={this.navToDogView}>
+          <img
+            src="https://images2.minutemediacdn.com/image/upload/c_crop,h_1065,w_1900,x_0,y_112/f_auto,q_auto,w_1100/v1565050342/shape/mentalfloss/594059-heartsbonesrescue.jpg"
+            className="card-img"
+            alt="..."
+          />
+          <div className="card-img-overlay">
+            <h1 className="card-title">Dog Pen</h1>
+          </div>
+        </div>
+        <div className="nav-div card col-4 bg-dark text-white DogPenDiv" onClick={this.navToStaffView}>
+          <img src="https://d17fnq9dkz9hgj.cloudfront.net/uploads/2012/11/86521966-careers-animals-job-632x475.jpg" className="card-img" alt="..." />
+          <div className="card-img-overlay">
+            <h1 className="card-title">Staff</h1>
+          </div>
+        </div>
+        <div className="nav-div card col-4 bg-dark text-white DogPenDiv" onClick={this.navToScheduleView}>
+          <img src="https://blog-assets.hootsuite.com/wp-content/uploads/2017/11/how-to-schedule-tweets-940x470.jpg" className="card-img" alt="..." />
+          <div className="card-img-overlay">
+            <h1 className="card-title">Walk Schedule</h1>
+          </div>
+        </div>
       </div>
     );
   }

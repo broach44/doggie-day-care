@@ -1,0 +1,14 @@
+@import '../../styles/variables';
+
+.employee-card {
+  background-color: $darkcream!important;
+  box-shadow: 5px 5px 5px gray;
+  
+  img {
+    height: 35px;
+    width: auto;
+    position: absolute;
+    left: 5%;
+    top: 10%;
+  }
+}

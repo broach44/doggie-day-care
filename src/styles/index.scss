@@ -1,4 +1,6 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
 @import './variables';
+@import url('https://fonts.googleapis.com/css?family=Modak&display=swap');
 
 body {
   margin: 0;
@@ -8,14 +10,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: $cream;
-
-  .nav-div {
-    min-height: 100vh;
-    border: 1px solid red;
-    width: 100%;
-    margin: 0!important;
-    align-content: center;
-  }
 
   .btn {
     background-color: $yellow;
@@ -45,16 +39,10 @@ body {
     margin: .5em;
   }
 
-  .card {
-    background-color: $yellow;
+  .thead-light {
+    background-color: red!important;
   }
 }
 
-// code {
-//   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-//     monospace;
-// }
-
-@import url('https://fonts.googleapis.com/css?family=Modak&display=swap');
 
 
