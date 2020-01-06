@@ -7,4 +7,4 @@ const firebaseApp = () => {
   }
 };
 
-export default { firebaseApp };
+export default firebaseApp;

@@ -1,29 +1,21 @@
 import React from 'react';
 
-import firebase from 'firebase/app';
-
-import Auth from '../Auth/Auth';
 import DogPen from '../DogPen/DogPen';
-import Navbar from '../Navbar/Navbar';
 import StaffRoom from '../StaffRoom/StaffRoom';
 import WalkSchedule from '../WalkSchedule/WalkSchedule';
 
 import dogsData from '../../helpers/data/dogsData';
 import employeesData from '../../helpers/data/employeesData';
-import firebaseConnection from '../../helpers/data/connection';
 import walksData from '../../helpers/data/walksData';
 
 import './Home.scss';
 
-firebaseConnection.firebaseApp();
 
 class Home extends React.Component {
   state = {
-    authed: false,
     employees: [],
     dogs: [],
     walks: [],
-    view: 'Home',
   }
 
   getEmployees = () => {
@@ -51,20 +43,9 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    this.removeListener = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.getEmployees();
-        this.getDogs();
-        this.getWalks();
-        this.setState({ authed: true });
-      } else {
-        this.setState({ authed: false });
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    this.removeListener();
+    this.getEmployees();
+    this.getDogs();
+    this.getWalks();
   }
 
   navToDogView = (e) => {
@@ -82,21 +63,13 @@ class Home extends React.Component {
     this.setState({ view: 'WalkSchedule' });
   }
 
-  setHomeView = () => {
-    this.setState({ view: 'Home' });
-  }
-
   renderView = () => {
     const {
-      authed,
       employees,
       dogs,
       walks,
       view,
     } = this.state;
-    if (!authed) {
-      return (<Auth />);
-    }
     if (view === 'DogPen') {
       return (
         <div>
@@ -162,10 +135,8 @@ class Home extends React.Component {
   }
 
   render() {
-    const { authed } = this.state;
     return (
       <div className="Home">
-        <Navbar authed={authed} setHomeView={this.setHomeView} />
         {
           this.renderView()
         }
