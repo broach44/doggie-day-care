@@ -8,17 +8,11 @@ import './Navbar.scss';
 class Navbar extends React.Component {
   static propTypes = {
     authed: PropTypes.bool,
-    setHomeView: PropTypes.func,
   }
 
   logMeOUt = (e) => {
     e.preventDefault();
     firebase.auth().signOut();
-  }
-
-  changeToHomeViewEvent = (e) => {
-    e.preventDefault();
-    this.props.setHomeView();
   }
 
   render() {
