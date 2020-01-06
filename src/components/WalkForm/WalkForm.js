@@ -22,7 +22,6 @@ class WalkForm extends React.Component {
     walk: walkShape.walkShape,
   }
 
-  // If in the update mode the form should update the state with the information from the walk sent over in props
   setupForWalkupdate = () => {
     const { walk } = this.props;
     this.setState({ selectedEmployee: walk.employeeId, selectedDog: walk.dogId, selectedDate: walk.date });
@@ -44,7 +43,12 @@ class WalkForm extends React.Component {
   }
 
   saveWalkEvent = (e) => {
-    const { addWalk, editMode } = this.props;
+    const {
+      addWalk,
+      editMode,
+      walk,
+      updateWalk,
+    } = this.props;
     const { selectedDate, selectedDog, selectedEmployee } = this.state;
 
     e.preventDefault();
@@ -53,9 +57,10 @@ class WalkForm extends React.Component {
       date: selectedDate,
       employeeId: selectedEmployee,
     };
-    // const walkToUpdate = walkId;
     if (editMode === 'new walk') {
       addWalk(newWalk);
+    } else if (editMode === 'update walk') {
+      updateWalk(walk.id, newWalk);
     }
     this.setState({ selectedDog: '', selectedDate: '', selectedEmployee: '' });
   }

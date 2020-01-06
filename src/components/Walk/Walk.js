@@ -74,18 +74,6 @@ class Walk extends React.Component {
     setEditUpdateMode(walk.id);
   }
 
-  updateWalkEvent = (e) => {
-    e.preventDefault();
-    const { walk, updateWalk } = this.props;
-    const { selectedDog, selectedEmployee, selectedDate } = this.state;
-    const updatedWalk = {
-      dogId: selectedDog,
-      employeeId: selectedEmployee,
-      date: selectedDate,
-    };
-    updateWalk(walk.id, updatedWalk);
-  }
-
   render() {
     const {
       walk,
@@ -93,19 +81,14 @@ class Walk extends React.Component {
       dogs,
       editMode,
       setWalkToEdit,
+      updateWalk,
     } = this.props;
-    // const {
-    //   editWalkMode,
-    //   selectedDog,
-    //   selectedEmployee,
-    //   selectedDate,
-    // } = this.state;
 
     return (
       <React.Fragment>
         {
           (editMode === 'update walk' && walk.id === setWalkToEdit)
-            ? <WalkForm dogs={dogs} employees={employees} walk={walk} editMode={editMode} />
+            ? <WalkForm dogs={dogs} employees={employees} walk={walk} editMode={editMode} updateWalk={updateWalk} />
             : <tr>
                 <td>{walk.date}</td>
                 <td>{this.getDogName()}</td>

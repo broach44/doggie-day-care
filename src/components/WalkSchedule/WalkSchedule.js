@@ -49,6 +49,7 @@ class WalkSchedule extends React.Component {
         this.props.getWalks();
       })
       .catch((errFromUpdateWalk) => console.error(errFromUpdateWalk));
+    this.cancelEditMode();
   }
 
   setEditNewMode = () => {
