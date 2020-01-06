@@ -1,20 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import EmployeeDD from '../EmployeeDropdown/EmployeeDropdown';
-import DogDD from '../DogDropdown/DogDropdown';
-
 import './WalkForm.scss';
 import employeeShape from '../../helpers/propz/employeeShape';
 import dogShape from '../../helpers/propz/dogShape';
+import walkShape from '../../helpers/propz/walkShape';
 
 class WalkForm extends React.Component {
   state = {
-    selectedEmployee: '',
+    selectedEmployee: 'Someone',
     selectedDog: '',
     selectedDate: '',
-    dogHeaderTitle: 'Choose A Dog',
-    employeeHeaderTitle: 'Choose An Employee',
   }
 
   static propTypes = {
@@ -23,22 +19,28 @@ class WalkForm extends React.Component {
     addWalk: PropTypes.func,
     updateWalk: PropTypes.func,
     editMode: PropTypes.string,
+    walk: walkShape.walkShape,
   }
 
-  saveDogEntry = (currentDogSelected) => {
-    this.setState({ selectedDog: currentDogSelected });
+  // If in the update mode the form should update the state with the information from the walk sent over in props
+  setupForWalkupdate = () => {
+    const { walk } = this.props;
+    this.setState({ selectedEmployee: walk.employeeId, selectedDog: walk.dogId, selectedDate: walk.date });
   }
 
-  saveEmployeeEntry = (currentEmployeeSelected) => {
-    this.setState({ selectedEmployee: currentEmployeeSelected });
+  componentDidMount() {
+    const { editMode } = this.props;
+    if (editMode === 'update walk') {
+      this.setupForWalkupdate();
+    }
   }
 
-  updateDogHeaderTitle = (newTitle) => {
-    this.setState({ dogHeaderTitle: newTitle });
+  saveDogEntry = (e) => {
+    this.setState({ selectedDog: e.target.value });
   }
 
-  updateEmployeeHeaderTitle = (newEmployeeTitle) => {
-    this.setState({ employeeHeaderTitle: newEmployeeTitle });
+  saveEmployeeEntry = (e) => {
+    this.setState({ selectedEmployee: e.target.value });
   }
 
   saveWalkEvent = (e) => {
@@ -65,7 +67,7 @@ class WalkForm extends React.Component {
 
   render() {
     const { employees, dogs } = this.props;
-    const { selectedDate, dogHeaderTitle, employeeHeaderTitle } = this.state;
+    const { selectedDate, selectedDog, selectedEmployee } = this.state;
 
     return (
         <tr>
@@ -79,8 +81,26 @@ class WalkForm extends React.Component {
             onChange={this.dateChange}
           />
           </td>
-          <td><DogDD dogs={dogs} saveDogEntry={this.saveDogEntry} dogHeaderTitle={dogHeaderTitle} updateDogHeaderTitle={this.updateDogHeaderTitle}/></td>
-          <td><EmployeeDD employees={employees} saveEmployeeEntry={this.saveEmployeeEntry} employeeHeaderTitle={employeeHeaderTitle} updateEmployeeHeaderTitle={this.updateEmployeeHeaderTitle} /></td>
+          <td>
+            <select className="form-control" value={selectedDog} id="dogName" onChange={this.saveDogEntry}>
+              <option defaultValue>Choose A Dog</option>
+            {
+              dogs.map((dog) => (
+                <option key={dog.id} value={dog.id}>{dog.dogName}</option>
+              ))
+            }
+            </select>
+          </td>
+          <td>
+            <select className="form-control" value={selectedEmployee} id="employeeName" onChange={this.saveEmployeeEntry}>
+              <option defaultValue>Choose An Employee</option>
+              {
+                employees.map((employee) => (
+                  <option key={employee.id} value={employee.id}>{employee.firstName} {employee.lastName}</option>
+                ))
+              }
+            </select>
+          </td>
           <td><button className="btn btn-success btn-sm" onClick={this.saveWalkEvent}>Save Button</button></td>
         </tr>
     );

@@ -12,6 +12,7 @@ import walkShape from '../../helpers/propz/walkShape';
 class WalkSchedule extends React.Component {
   state = {
     editMode: 'none',
+    setWalkToEdit: '',
   }
 
   static propTypes = {
@@ -54,8 +55,8 @@ class WalkSchedule extends React.Component {
     this.setState({ editMode: 'new walk' });
   }
 
-  setEditUpdateMode = () => {
-    this.setState({ editMode: 'update walk' });
+  setEditUpdateMode = (walkId) => {
+    this.setState({ editMode: 'update walk', setWalkToEdit: walkId });
   }
 
   cancelEditMode = () => {
@@ -63,7 +64,7 @@ class WalkSchedule extends React.Component {
   }
 
   render() {
-    const { editMode } = this.state;
+    const { editMode, setWalkToEdit } = this.state;
     const { walks, employees, dogs } = this.props;
     return (
       <div>
@@ -86,12 +87,15 @@ class WalkSchedule extends React.Component {
                   employees={employees}
                   dogs={dogs}
                   updateWalk={this.updateWalk}
-                  editMode={editMode} />)
+                  editMode={editMode}
+                  setEditUpdateMode={this.setEditUpdateMode}
+                  setWalkToEdit={setWalkToEdit} />)
               }
           <tr>
             <td>
               {
-                (editMode === 'none') ? <button className="btn btn-success btn-sm" onClick={this.setEditNewMode}>Add New Walk</button>
+                (editMode === 'none')
+                  ? <button className="btn btn-success btn-sm" onClick={this.setEditNewMode}>Add New Walk</button>
                   : <button className="btn btn-danger btn-sm" onClick={this.cancelEditMode}>Cancel</button>
               }
             </td>
@@ -100,7 +104,14 @@ class WalkSchedule extends React.Component {
             <td></td>
           </tr>
           {
-            (editMode === 'new walk') && <WalkForm addWalk={this.addWalk} employees={employees} dogs={dogs} editMode={editMode} updateWalk={this.updateWalk} />
+            (editMode === 'new walk')
+              && <WalkForm
+                addWalk={this.addWalk}
+                employees={employees}
+                dogs={dogs}
+                editMode={editMode}
+                updateWalk={this.updateWalk}
+              />
           }
           </tbody>
         </table>
