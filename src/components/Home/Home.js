@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import DogPen from '../DogPen/DogPen';
 import StaffRoom from '../StaffRoom/StaffRoom';
@@ -98,7 +99,7 @@ class Home extends React.Component {
       return (
         <div>
           <div>
-            <button className="btn btn-primary btn-lg m-2" onClick={this.navToDogView} id="DogPen">Dogs</button>
+            <Link className="btn btn-primary btn-lg m-2" to="/DogPen" id="DogPen">Dogs</Link>
             <button className="btn btn-primary btn-lg m-2" onClick={this.navToStaffView} id="StaffRoom">Staff</button>
             <button className="btn btn-primary btn-lg m-2 active" id="WalkSchedule">Schedule</button>
           </div>
