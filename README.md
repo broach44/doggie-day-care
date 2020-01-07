@@ -15,14 +15,25 @@ This applciation is create using React and features full CRUD on the data for th
 ## Screenshots
 
 #### Logged Out View: 
+![LoggedOutView](https://raw.githubusercontent.com/broach44/doggie-day-care/master/screenshots/logged-out-view.png)
 
 #### Home View:
+![Home](https://raw.githubusercontent.com/broach44/doggie-day-care/master/screenshots/home-view.png)
 
 #### Dog Pen (Dogs View):
+![DogPen](https://raw.githubusercontent.com/broach44/doggie-day-care/master/screenshots/dog-pen.png)
 
 #### Staff Room (Employees View):
+![StaffRoom](https://raw.githubusercontent.com/broach44/doggie-day-care/master/screenshots/staff-room.png)
 
 #### Walk Schedule:
+![WalkSchedule](https://raw.githubusercontent.com/broach44/doggie-day-care/master/screenshots/walk-schedule.png)
+
+#### Update Walk:
+![UpdateWalk](https://raw.githubusercontent.com/broach44/doggie-day-care/master/screenshots/update-walk.png)
+
+#### New Walk:
+![NewWalk](https://raw.githubusercontent.com/broach44/doggie-day-care/master/screenshots/new-walk.png)
 
 ## Demo
 ** Release TBD **
